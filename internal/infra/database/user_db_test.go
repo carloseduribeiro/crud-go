@@ -8,12 +8,20 @@ import (
 	"testing"
 )
 
-func TestNewUser(t *testing.T) {
-	db, err := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{})
-	if err != nil {
-		t.Error(err)
+func prepareDBConnForUser(t *testing.T) (db *gorm.DB, err error) {
+	t.Helper()
+	if db, err = gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{}); err != nil {
+		return
 	}
 	if err = db.AutoMigrate(&entity.User{}); err != nil {
+		return nil, err
+	}
+	return
+}
+
+func TestNewUser(t *testing.T) {
+	db, err := prepareDBConnForUser(t)
+	if err != nil {
 		t.Error(err)
 	}
 	user, _ := entity.NewUser("Jhon", "j@j.com", "123456")
@@ -30,11 +38,8 @@ func TestNewUser(t *testing.T) {
 }
 
 func TestFindByEmail(t *testing.T) {
-	db, err := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{})
+	db, err := prepareDBConnForUser(t)
 	if err != nil {
-		t.Error(err)
-	}
-	if err = db.AutoMigrate(&entity.User{}); err != nil {
 		t.Error(err)
 	}
 	user, _ := entity.NewUser("Jhon", "j@j.com", "123456")
