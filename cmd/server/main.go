@@ -25,6 +25,7 @@ func main() {
 		panic(err)
 	}
 	productHandler := handlers.NewProductHandler(database.NewProduct(db))
+	userHandler := handlers.NewUser(database.NewUser(db))
 	r := chi.NewRouter()
 	r.Use(middleware.DefaultLogger)
 	r.Post("/products", productHandler.CreateProduct)
@@ -32,6 +33,7 @@ func main() {
 	r.Get("/products", productHandler.GetProducts)
 	r.Put("/products/{id}", productHandler.UpdateProduct)
 	r.Delete("/products/{id}", productHandler.DeleteProduct)
+	r.Post("/users", userHandler.Create)
 	if err = http.ListenAndServe(":8000", r); err != nil {
 		panic(err)
 	}
