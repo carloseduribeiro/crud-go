@@ -28,6 +28,10 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.DefaultLogger)
 	r.Post("/products", productHandler.CreateProduct)
+	r.Get("/products/{id}", productHandler.GetProduct)
+	r.Get("/products", productHandler.GetProducts)
+	r.Put("/products/{id}", productHandler.UpdateProduct)
+	r.Delete("/products/{id}", productHandler.DeleteProduct)
 	if err = http.ListenAndServe(":8000", r); err != nil {
 		panic(err)
 	}

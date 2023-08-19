@@ -3,17 +3,20 @@ module github.com/carloseduribeiro/crud-go
 go 1.20
 
 require (
+	github.com/go-chi/chi v1.5.1
+	github.com/go-chi/chi/v5 v5.0.10
 	github.com/go-chi/jwtauth v1.2.0
 	github.com/google/uuid v1.1.2
 	github.com/spf13/viper v1.16.0
 	github.com/stretchr/testify v1.8.3
 	golang.org/x/crypto v0.9.0
+	gorm.io/driver/sqlite v1.5.2
+	gorm.io/gorm v1.25.3
 )
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
-	github.com/go-chi/chi/v5 v5.0.10 // indirect
 	github.com/goccy/go-json v0.3.5 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
@@ -38,6 +41,4 @@ require (
 	golang.org/x/text v0.9.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/driver/sqlite v1.5.2 // indirect
-	gorm.io/gorm v1.25.3 // indirect
 )
