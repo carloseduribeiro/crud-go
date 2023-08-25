@@ -6,7 +6,7 @@ import (
 	"github.com/carloseduribeiro/crud-go/internal/entity"
 	"github.com/carloseduribeiro/crud-go/internal/infra/database"
 	entityPkg "github.com/carloseduribeiro/crud-go/pkg/entity"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"net/http"
 	"strconv"
 )
