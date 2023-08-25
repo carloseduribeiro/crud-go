@@ -2,17 +2,33 @@ package main
 
 import (
 	"github.com/carloseduribeiro/crud-go/configs"
+	_ "github.com/carloseduribeiro/crud-go/docs"
 	"github.com/carloseduribeiro/crud-go/internal/entity"
 	"github.com/carloseduribeiro/crud-go/internal/infra/database"
 	"github.com/carloseduribeiro/crud-go/internal/infra/webserver/handlers"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/jwtauth"
+	httpSwagger "github.com/swaggo/http-swagger"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"net/http"
 )
 
+// @title           Go Expert API Example
+// @version         1.0
+// @description     Product API with authentication developed during Full Cycle's Go Expert course
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   Carlos Eduardo Ribeiro
+// @contact.url    https://www.linkedin.com/in/carloseduardoribeiro96/
+// @contact.email  carloseribeiro96@gmail.com
+
+// @host      localhost:8000
+// @BasePath  /
+// @securityDefinitions.apiKey ApiKeyAuth
+// @in HEADER
+// @name Authorization
 func main() {
 	config, err := configs.LoadConfig(".")
 	if err != nil {
@@ -39,8 +55,11 @@ func main() {
 		r.Put("/{id}", productHandler.UpdateProduct)
 		r.Delete("/{id}", productHandler.DeleteProduct)
 	})
-	r.Post("/users", userHandler.Create)
-	r.Post("/users/generate_token", userHandler.GetJWT)
+	r.Route("/users", func(r chi.Router) {
+		r.Post("/", userHandler.Create)
+		r.Post("/generate_token", userHandler.GetJWT)
+	})
+	r.Get("/docs/*", httpSwagger.Handler(httpSwagger.URL("http://localhost:8000/docs/doc.json")))
 	if err = http.ListenAndServe(":8000", r); err != nil {
 		panic(err)
 	}
